@@ -1,7 +1,5 @@
 FROM amd64/ubuntu:24.04
-RUN DEBIAN_FRONTEND=noninteractive apt-get update
-RUN DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
-
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
     apt-transport-https \
     apt-utils \
@@ -16,23 +14,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommend
     openjdk-8-jdk \
     openjdk-11-jdk \
     openjdk-17-jdk \
-    npm
-
-# Install donet SDK
-RUN apt-get update && \
-  apt-get install -y dotnet-sdk-8.0
-
-# TODO: Workaround for devops agent not supporting OpenSSL 3.0
-# https://github.com/microsoft/azure-pipelines-agent/issues/3834#issuecomment-1160576447
-RUN curl -sL http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb > libssl1.1_1.1.0g-2ubuntu4_amd64.deb && \
-    DEBIAN_FRONTEND=noninteractive dpkg -i libssl1.1_1.1.0g-2ubuntu4_amd64.deb && \
-    rm libssl1.1_1.1.0g-2ubuntu4_amd64.deb
-
-# https://github.com/microsoft/azure-pipelines-agent/issues/3834#issuecomment-1151874312
-RUN sed -i 's/openssl_conf = openssl_init/#openssl_conf = openssl_init/g' /etc/ssl/openssl.cnf
-
-# Install Azure CLI
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+    npm \
+    dotnet-sdk-8.0 \
+    gnupg && \
+    mkdir -p /etc/apt/keyrings && \
+    curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/keyrings/microsoft.gpg > /dev/null && \
+    chmod go+r /etc/apt/keyrings/microsoft.gpg && \
+    echo "deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list && \
+    apt-get update && \
+    apt-get install -y azure-cli && \
+    rm -rf /var/lib/apt/lists/*
 
 # Can be 'linux-x64', 'linux-arm64', 'linux-arm', 'rhel.6-x64'.
 ENV TARGETARCH=linux-x64
