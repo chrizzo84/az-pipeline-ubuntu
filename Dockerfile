@@ -1,4 +1,4 @@
-FROM amd64/ubuntu:24.04
+FROM ubuntu:24.04
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
     apt-transport-https \
