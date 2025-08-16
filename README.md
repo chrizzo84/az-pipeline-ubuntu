@@ -29,8 +29,9 @@ This is a Dockerfile + start.sh for Azure Piplines Agent with some preinstalled 
 [GNU General Public License v3.0](LICENSE)
 
 ## HowTo:
-Just build with docker build.
-Run it with
+This image is automatically built and pushed to the GitHub Container Registry (ghcr.io) using GitHub Actions.
+
+Run it with:
 ```
-docker run -e AZP_URL=https://dev.azure.com/<OranizationName> -e AZP_TOKEN=<YourPersonalAccessToken> -e AZP_AGENT_NAME=<AgentName> -e AZP_POOL=<PoolName> yourdockerimagename:yourtag
+docker run -e AZP_URL=https://dev.azure.com/<OranizationName> -e AZP_TOKEN=<YourPersonalAccessToken> -e AZP_AGENT_NAME=<AgentName> -e AZP_POOL=<PoolName> ghcr.io/chrizzo84/azpipeline:latest
 ```
