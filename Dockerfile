@@ -25,9 +25,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommend
     apt-get install -y azure-cli && \
     rm -rf /var/lib/apt/lists/*
 
-# Can be 'linux-x64', 'linux-arm64', 'linux-arm', 'rhel.6-x64'.
-ENV TARGETARCH=linux-x64
-
 # Set JAVA_Home_Variables
 ENV JAVA_HOME_8_X64=/usr/lib/jvm/java-8-openjdk-amd64
 ENV JAVA_HOME_11_X64=/usr/lib/jvm/java-11-openjdk-amd64
