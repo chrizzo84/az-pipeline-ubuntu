@@ -50,6 +50,16 @@ export VSO_AGENT_IGNORE=AZP_TOKEN,AZP_TOKEN_FILE
 
 print_header "1. Determining matching Azure Pipelines agent..."
 
+ARCH=$(uname -m)
+if [ "$ARCH" = "x86_64" ]; then
+  TARGETARCH="linux-x64"
+elif [ "$ARCH" = "aarch64" ]; then
+  TARGETARCH="linux-arm64"
+else
+  echo "Unsupported architecture: $ARCH"
+  exit 1
+fi
+
 AZP_AGENT_PACKAGES=$(curl -LsS \
     -u user:$(cat "$AZP_TOKEN_FILE") \
     -H 'Accept:application/json;' \

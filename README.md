@@ -2,28 +2,31 @@
 This is a Dockerfile + start.sh for Azure Piplines Agent with some preinstalled stuff.
 
 ## Preinstalled Software:
-- OpenJDK17
-- OpenJDK11
+- OpenJDK 17
+- OpenJDK 11
 - OpenJDK 8
 - Dotnet 8
-- Python3
+- Python 3
 - npm
+- Azure CLI
 
 ## Capabilities:
 | Env              | Path                                |
 |------------------|-------------------------------------|
+| az               | /usr/bin/az                         |
 | curl             | /usr/bin/curl                       |
-| dotnet           | /usr/lib/dotnet/sdk                 |
+| dotnet           | /usr/bin/dotnet                     |
 | git              | /usr/bin/git                        |
+| java             | /usr/bin/java                       |
 | JAVA_HOME_8_X64  | /usr/lib/jvm/java-8-openjdk-amd64   |
 | JAVA_HOME_11_X64 | /usr/lib/jvm/java-11-openjdk-amd64  |
 | JAVA_HOME_17_X64 | /usr/lib/jvm/java-17-openjdk-amd64  |
 | python3          | /usr/bin/python3                    |
-| node.js          | /usr/bin/nodejs                     |
-| npm              | /usr/bin/npm                     |
+| nodejs           | /usr/bin/nodejs                     |
+| npm              | /usr/bin/npm                        |
 
 ## License:
-[GNU General Public License v3.0](https://raw.githubusercontent.com/chrizzo84/azpipeline-ubuntu2204/main/LICENSE)
+[GNU General Public License v3.0](LICENSE)
 
 ## HowTo:
 Just build with docker build.
